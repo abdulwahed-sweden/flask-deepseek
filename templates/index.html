@@ -1,56 +1,155 @@
-<!DOCTYPE html>
-<html lang="ar">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🌍 Random City Finder</title>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>🌍 CityExplorer - Discover New Places</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
-</head>
-<body class="bg-gray-100 text-gray-900">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+      body {
+        font-family: 'Inter', sans-serif;
+      }
+      .animate-fade-in {
+        animation: fadeIn 0.5s ease-out forwards;
+      }
+      @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+    </style>
+  </head>
+  <body class="bg-gradient-to-br from-blue-50 via-white to-indigo-50 min-h-screen">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm fixed w-full z-10">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between h-16 items-center">
+          <a href="/" class="flex items-center space-x-2">
+            <span class="text-3xl">🌍</span>
+            <span class="text-2xl font-bold text-gray-900">CityExplorer</span>
+          </a>
+          <div class="hidden sm:flex sm:space-x-6">
+            <a href="#features" class="text-gray-700 hover:text-blue-600 text-lg font-medium">Features</a>
+            <a href="#discover" class="text-gray-700 hover:text-blue-600 text-lg font-medium">Discover</a>
+            <a href="#about" class="text-gray-700 hover:text-blue-600 text-lg font-medium">About</a>
+            <a href="#" class="bg-blue-600 text-white px-5 py-2 rounded-lg text-lg font-semibold shadow-md hover:bg-blue-700">Get Started</a>
+          </div>
+        </div>
+      </div>
+    </nav>
 
-    <div class="container mx-auto text-center py-10">
-        <h1 class="text-4xl font-bold text-blue-600 mb-5">🌍 Random City Finder</h1>
-        <p class="text-lg">Discover a real but lesser-known city around the world.</p>
-
-        <button id="fetchCity" class="mt-5 px-6 py-3 bg-blue-600 text-white rounded-md shadow-md hover:bg-blue-700">
-            🎲 Generate Random City
+    <!-- Hero Section -->
+    <section class="pt-40 pb-20 text-center">
+      <div class="max-w-4xl mx-auto px-4">
+        <h2 class="text-5xl font-extrabold text-gray-900 mb-6">🎲 Random City Generator</h2>
+        <p class="text-xl text-gray-600 mb-8">Click below to explore a new random city!</p>
+        <button id="fetchCity" class="inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-white rounded-lg bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-900">
+          🔍 Discover New City
         </button>
 
-        <div id="cityDetails" class="mt-8 hidden">
-            <h2 class="text-2xl font-semibold text-gray-800" id="cityName"></h2>
-            <p class="text-lg text-gray-600"><span id="adminName"></span>, <span id="countryName"></span></p>
-            <p class="text-gray-700"><strong>👥 Population:</strong> <span id="population"></span></p>
-
-            <div class="mt-5">
-                <iframe id="cityMap" width="100%" height="400px" class="rounded-md shadow-md"></iframe>
+        <div id="cityDetails" class="mt-8 hidden border-t pt-6 animate-fade-in">
+          <p class="text-2xl font-bold text-rose-700 py-2" id="cityName"></p>
+          
+            <div class="inline-flex rounded-md shadow-xs">
+                
+                <a href="#" aria-current="page" class="px-4 py-2 text-sm font-medium text-blue-700 bg-white border border-gray-200 rounded-s-lg hover:bg-gray-100 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white">
+                    State: <span id="adminName"></span>
+                </a>
+                <a href="#" class="px-4 py-2 text-sm font-medium text-gray-900 bg-white border-t border-b border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white">
+                    Country: <span class="font-bold text-rose-700" id="countryName"></span> 
+                </a>
+                <a href="#" class="px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-e-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white">
+                    Population: <span id="population"></span>
+                </a>
             </div>
+
+          <div class="mt-6 overflow-hidden rounded-xl shadow-lg border border-gray-200">
+            <iframe id="cityMap" width="100%" height="600" class="rounded-lg" loading="lazy"></iframe>
+          </div>
         </div>
-    </div>
+
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <div id="cityDetails" class="w-full max-w-md hidden mx-auto prounded-lg border border-gray-200 bg-white p-4 shadow-sm sm:p-8 dark:border-gray-700 dark:bg-gray-800 animate-fade-in">
+        <div class="mb-4 flex items-center justify-between">
+          <h5 class="text-xl leading-none font-bold text-gray-900 dark:text-white">Stockholm</h5>
+          <a href="#" class="text-sm font-medium text-blue-600 hover:underline dark:text-blue-500"> Population </a>
+        </div>
+        <div class="flow-root">
+          <ul role="list" class="divide-y divide-gray-200 dark:divide-gray-700">
+            <li class="py-3 sm:py-4">
+              <div class="flex items-center">
+                <div class="shrink-0">
+                  <img class="h-8 w-8 rounded-full" src="/docs/images/people/profile-picture-1.jpg" alt="Neil image" />
+                </div>
+                <div class="ms-4 min-w-0 flex-1">
+                  <p class="truncate text-sm font-medium text-gray-900 dark:text-white">Sweden</p>
+                  <p class="truncate text-sm text-gray-500 dark:text-gray-400">Län</p>
+                </div>
+                <div class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white" id="population"></div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+    <!-- Features Section -->
+    <section id="features" class="py-24 bg-white">
+      <div class="max-w-6xl mx-auto px-6 text-center">
+        <h2 class="text-4xl font-bold text-gray-900">Why Use CityExplorer?</h2>
+        <p class="mt-4 text-xl text-gray-600">Explore cities randomly and expand your knowledge.</p>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-12 mt-12">
+          <div class="p-8 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl">
+            <div class="w-16 h-16 bg-blue-100 rounded-lg flex items-center justify-center mb-6 text-3xl">🎯</div>
+            <h3 class="text-2xl font-semibold text-gray-900 mb-3">Random Discovery</h3>
+            <p class="text-gray-600">Find hidden gems and unexpected destinations worldwide.</p>
+          </div>
+          <div class="p-8 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl">
+            <div class="w-16 h-16 bg-blue-100 rounded-lg flex items-center justify-center mb-6 text-3xl">🗺️</div>
+            <h3 class="text-2xl font-semibold text-gray-900 mb-3">Interactive Maps</h3>
+            <p class="text-gray-600">Explore city locations with real-time geographic information.</p>
+          </div>
+          <div class="p-8 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl">
+            <div class="w-16 h-16 bg-blue-100 rounded-lg flex items-center justify-center mb-6 text-3xl">📊</div>
+            <h3 class="text-2xl font-semibold text-gray-900 mb-3">Rich Data</h3>
+            <p class="text-gray-600">Gain insights on population, region, and cultural significance.</p>
+          </div>
+        </div>
+      </div>
+    </section>
 
     <script>
-        document.getElementById("fetchCity").addEventListener("click", function() {
-            fetch("/random_city")
-                .then(response => response.json())
-                .then(data => {
-                    if (data.error) {
-                        alert(data.error);
-                        return;
-                    }
+      document.getElementById("fetchCity").addEventListener("click", function() {
+        const button = this;
+        const originalText = button.innerHTML;
+        button.disabled = true;
+        button.innerHTML = '<span class="animate-spin">🔄</span> Loading...';
 
-                    document.getElementById("cityName").innerText = data.city;
-                    document.getElementById("adminName").innerText = data.admin_name;
-                    document.getElementById("countryName").innerText = data.country;
-                    document.getElementById("population").innerText = data.population.toLocaleString();
-                    
-                    let mapUrl = `https://maps.google.com/maps?q=${data.lat},${data.lng}&z=6&output=embed`;
-                    document.getElementById("cityMap").src = mapUrl;
-
-                    document.getElementById("cityDetails").classList.remove("hidden");
-                })
-                .catch(error => console.error("Error fetching city:", error));
-        });
+        fetch("/random_city")
+          .then(response => response.json())
+          .then(data => {
+            if (data.error) {
+              alert(data.error);
+              return;
+            }
+            document.getElementById("cityName").innerText = data.city;
+            document.getElementById("adminName").innerText = data.admin_name;
+            document.getElementById("countryName").innerText = data.country;
+            document.getElementById("population").innerText = data.population.toLocaleString();
+            let mapUrl = `https://maps.google.com/maps?q=${data.lat},${data.lng}&z=6&output=embed`;
+            document.getElementById("cityMap").src = mapUrl;
+            document.getElementById("cityDetails").classList.remove("hidden");
+          })
+          .catch(error => console.error("Error fetching city:", error))
+          .finally(() => {
+            button.disabled = false;
+            button.innerHTML = originalText;
+          });
+      });
     </script>
-
-</body>
+  </body>
 </html>
