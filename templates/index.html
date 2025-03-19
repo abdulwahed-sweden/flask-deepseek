@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌍 Random City Finder</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
+</head>
+<body class="bg-gray-100 text-gray-900">
+
+    <div class="container mx-auto text-center py-10">
+        <h1 class="text-4xl font-bold text-blue-600 mb-5">🌍 Random City Finder</h1>
+        <p class="text-lg">Discover a real but lesser-known city around the world.</p>
+
+        <button id="fetchCity" class="mt-5 px-6 py-3 bg-blue-600 text-white rounded-md shadow-md hover:bg-blue-700">
+            🎲 Generate Random City
+        </button>
+
+        <div id="cityDetails" class="mt-8 hidden">
+            <h2 class="text-2xl font-semibold text-gray-800" id="cityName"></h2>
+            <p class="text-lg text-gray-600"><span id="adminName"></span>, <span id="countryName"></span></p>
+            <p class="text-gray-700"><strong>👥 Population:</strong> <span id="population"></span></p>
+
+            <div class="mt-5">
+                <iframe id="cityMap" width="100%" height="400px" class="rounded-md shadow-md"></iframe>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById("fetchCity").addEventListener("click", function() {
+            fetch("/random_city")
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        alert(data.error);
+                        return;
+                    }
+
+                    document.getElementById("cityName").innerText = data.city;
+                    document.getElementById("adminName").innerText = data.admin_name;
+                    document.getElementById("countryName").innerText = data.country;
+                    document.getElementById("population").innerText = data.population.toLocaleString();
+                    
+                    let mapUrl = `https://maps.google.com/maps?q=${data.lat},${data.lng}&z=6&output=embed`;
+                    document.getElementById("cityMap").src = mapUrl;
+
+                    document.getElementById("cityDetails").classList.remove("hidden");
+                })
+                .catch(error => console.error("Error fetching city:", error));
+        });
+    </script>
+
+</body>
+</html>
